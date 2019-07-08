@@ -1,0 +1,111 @@
+body{
+  background-color: #2A9D8F !important;
+}
+.my-4{
+  background-color: #FF9F1C !important;
+}
+/*#selected-image{
+  width: 300px;
+  height: auto;
+}*/
+.main-body{
+  background-color: #264653 !important;
+  color: #FDFFFC;
+  border-top: 40px solid #2A9D8F;
+  /*border-bottom: 40px solid #2A9D8F;*/
+  padding: 5% !important;
+  height: 850px;
+
+}
+
+.column {
+  float: left;
+  width: 50%;
+  padding: 15px;
+  height: 300px; /* Should be removed. Only for demonstration */
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.info1 {
+  float: left;
+  width: 50%;
+  padding: 2px;
+  height: 90px; /* Should be removed. Only for demonstration */
+}
+
+/* Clear floats after the columns */
+.userInfo1:after {
+  content: "";
+  display: table;
+  clear: both;
+  
+}
+
+.info2{
+  float: left;
+  width: 50%;
+  padding: 2px;
+  height: 90px; /* Should be removed. Only for demonstration */
+}
+
+/* Clear floats after the columns */
+.userInfo2:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.form-check-label{
+  padding: 10px;
+}
+
+
+#age{
+  padding-left:5px;
+  height: 30px;
+}
+#location{
+  padding-left:5px;
+  height: 30px;
+}
+#education{
+    
+    padding: 5px;
+    height: 30px;
+}
+
+.form-check-survey {
+  float: left;
+  width: 50%;
+  padding: 10px;
+  height: 100px; /* Should be removed. Only for demonstration */
+}
+
+/* Clear floats after the columns */
+.survey:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.form-check-survey2 {
+  float: left;
+  width: 50%;
+  padding: 10px;
+  height: 120px; /* Should be removed. Only for demonstration */
+}
+
+/* Clear floats after the columns */
+.survey2:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+#submit{
+  margin: 10px;
+}

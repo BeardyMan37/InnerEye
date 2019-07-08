@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>InnerEye Prediction</title>
+	<link rel="stylesheet" href="index_master.css"/>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>
+	<style>
+		* {
+			font-size:15px;
+		}
+	</style>
+</head>
+<body>
+	<div class="jumbotron main-body" id="div2">
+			<h1 class="display-4" style="font-weight:bold">InnerEye Predictions</h1>
+			<p class="lead">Check the origanility of any picture!</p>
+			<hr class="my-4">
+			<div class="row">
+			  <div class="column">
+				<!-- <h2>Column 1</h2> -->
+				<div class="form-group">
+						<img id="selected-image" style="width:300px;height:200px;border:0px; " src="" />
+				</div>
+				<div class="form-group">
+					<input onchange="inputImage()" id="image-selector" type="file"/>
+				</div>
+				<div class="form-group" id="div4">
+					<button id="predict-button" class="btn btn-warning" onclick="predictButton()">Predict</button>
+				</div>
+				 <div class="form-group result">
+					<p>Confidence of being original image: <span id="original-confidence"></span></p>
+					<p>Confidence of being filtered image: <span id="filtered-confidence"></span></p>
+					<p>Predictions: <span id="prediction" ></span></p>
+				</div>
+			  </div>
+			  <div class="column">
+				<h2>Originality Prediction Survey:</h2>
+				
+				<h5><b>User Information</b></h5>
+				
+				<div class="userInfo1">
+					<div class="info1">
+						<h6><b>Gender:</b></h6>
+						<div class="form-check">
+							<label class="form-check-label">
+								<input type="radio" class="form-check-input" name="gen" id="gen1" value="Male">
+								Male
+							</label>
+
+							<label class="form-check-label">
+								<input type="radio" class="form-check-input" name="gen" id="gen2" value="Female">
+								Female
+							</label>
+
+							<label class="form-check-label">
+								<input type="radio" class="form-check-input" name="gen" id="gen3" value="Others">
+								Others
+							</label>
+							
+						</div>
+					</div>
+					<div class="info1">
+						<h6><b>Age:</b></h6>
+						<label class="form-check-label">
+							<input type="text" name="age" id="age" placeholder="18" value="">
+						</label>
+						
+					</div>
+				</div>
+				<div class="userInfo2">
+					<div class="info2">
+						<h6><b>Education:</b></h6>
+						<label class="form-check-label">
+						<select id="education" name="education" value="Secondary School">
+							<option value="secondary">Secondary School</option>
+							<option value="HSecondary">Higher Secondary School</option>
+							<option value="undergraduate">Undergraduate</option>
+							<option value="graduate">Graduate</option>
+							<option value="postgraduate">Postgraduate</option>
+						</select>
+						</label>
+						
+					</div>
+					<div class="info2">
+						<h6><b>Location:</b></h6>
+						<label class="form-check-label">
+							<input type="text" name="location" id="location" placeholder="Palashi, Dhaka, Bangladesh" value="">
+						</label>
+					</div>
+				</div>
+			   
+				<h5>Survey Questions:</h5>
+				<div class="survey">
+					<div class="form-check-survey">
+						<h6>Is the originality percentage satisfactory?</h6>
+							<div class="form-check">
+								
+									<input type="radio" class="form-check-input" name="pred1" id="q1pred1" value="option11" checked>
+									Yes
+							</div>
+
+
+							<div class="form-check">
+
+									<input type="radio" class="form-check-input" name="pred1" id="q2pred1" value="option12">
+									No
+							</div>
+					</div>
+					<div class="form-check-survey">
+						<h6>Is the qualitative prediction satisfactory?</h6>
+							<div class="form-check">
+								
+									<input type="radio" class="form-check-input" name="pred2" id="q1pred2" value="option21" checked>
+									Yes
+									
+							</div>
+
+
+							<div class="form-check">
+								
+									<input type="radio" class="form-check-input" name="pred2" id="q2pred2" value="option22">
+									No
+							</div>
+					</div>
+
+				</div>
+
+				<div class="survey2">
+					<div class="form-check-survey2">
+						<h6>Which method of prediction is more preferable?</h6>
+							<div class="form-check">
+								
+									<input type="radio" class="form-check-input" name="pred3" id="q1pred3" value="option31" checked>
+									Originality percentage
+								
+							</div>
+
+
+							<div class="form-check">
+								
+									<input type="radio" class="form-check-input" name="pred3" id="q1pred3" value="option31" checked>
+									Prediction result
+								
+							</div>
+							<div class="form-check">
+								
+									<input type="radio" class="form-check-input" name="pred3" id="q1pred3" value="option31" checked>
+									Both
+								
+							</div>
+					</div>
+					<div class="form-check-survey2">
+						<h6>User's originality prediction in percentage:</h6>
+						<div class="form-group">
+							<input type="text" name="userPrediction" id="userPrediction" placeholder=" Example: 78" value="">
+
+						</div>
+					</div>
+
+				</div>
+				<div class="form-group">
+						<button id="submit" onclick="getAndSend()" class="btn btn-primary" type="button" name="button">Submit</button>
+					</div>
+			  </div>
+			</div>
+	</div>
+
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script>
+		function round(value, exp) {
+			  if (typeof exp === 'undefined' || +exp === 0)
+					return Math.round(value);
+
+			  value = +value;
+			  exp = +exp;
+
+			  if (isNaN(value) || !(typeof exp === 'number' && exp % 1 === 0))
+					return NaN;
+
+			  // Shift
+			  value = value.toString().split('e');
+			  value = Math.round(+(value[0] + 'e' + (value[1] ? (+value[1] + exp) : exp)));
+
+			  // Shift back
+			  value = value.toString().split('e');
+			  return +(value[0] + 'e' + (value[1] ? (+value[1] - exp) : -exp));
+		}
+
+		let base64Image;
+		
+		// $("#image-selector").change(function(){
+		//  let reader = new FileReader();
+		//  reader.onload = function(e){
+		//      let dataURL = reader.result;
+		//      $('#selected-image').attr("src", dataURL);
+		//      base64Image = dataURL.replace("data:image/jpeg;base64,", "");
+		//      console.log(base64Image);
+		//  };
+		//  reader.readAsDataURL($("#image-selector")[0].files[0]);
+		//  $("#original-prediction").text("");
+		//  $("#filtered-prediction").text("");
+		// });
+		$
+		function inputImage(){
+			let reader = new FileReader();
+			reader.onload = function(e){
+				let dataURL = reader.result;
+				$('#selected-image').attr("src", dataURL);
+				base64Image = dataURL.replace("data:image/jpeg;base64,", "");
+				console.log(base64Image);
+			};
+			reader.readAsDataURL($("#image-selector")[0].files[0]);
+			$("#original-prediction").text("");
+			$("#filtered-prediction").text("");
+		}
+
+		function predictButton() {
+			// let str="chashistring";
+			let message = {
+				image: base64Image
+				// mystr: str
+
+			};
+			console.log(message);
+			$.post("https://inner-eye.herokuapp.com/predict", JSON.stringify(message), function(response){
+				$("#original-confidence").text((round(response.prediction.original * 100, 0).toFixed(0)) + "%");
+				$("#filtered-confidence").text((round(response.prediction.filtered * 100, 0).toFixed(0)) + "%");
+				
+				let filteredConfidence=response.prediction.filtered.toFixed(6);
+				let prediction="";
+				if(filteredConfidence>=0 && filteredConfidence <=0.20) prediction="InnerEye is strictly confident that there were no filter applied on this image.";
+				else if(filteredConfidence>0.20 && filteredConfidence <=0.40) prediction="InnerEye is fairly confident that there were no filter applied on this image, although the color distribution may be similar to some filters.";
+				else if(filteredConfidence>0.40 && filteredConfidence <=0.60) prediction="InnerEye is unable to make a prediction about this image due to uncertainity.";
+				else if(filteredConfidence>0.60 && filteredConfidence <=0.80) prediction="InnerEye is fairly confident that some kind of filter were applied on this image, although it might be possible that the color distribution threw it off track.";
+				else if(filteredConfidence>0.80 && filteredConfidence <=1.00) prediction="InnerEye is strictly confident that some kind of filter were applied on this image.";
+				
+				// $("#prediction").text(prediction);
+				document.getElementById("prediction").innerHTML =prediction;
+				console.log(response);
+			});
+			
+		}
+		
+		function getAndSend() {
+			let uAge = document.getElementById("age").value;
+			let uLocation = document.getElementById("location").value;
+			let uEducation=document.getElementById("education").value;
+			
+			let uGender = $("input[name='gen']:checked").val();
+			let uPred1=$("input[name='pred1']:checked").val();
+			let uPred2=$("input[name='pred2']:checked").val();
+			let uPred3=$("input[name='pred3']:checked").val();
+			let uPred4 = document.getElementById("userPrediction").value;
+
+			
+
+
+			
+
+			let userInfo = {
+				age : uAge,
+				location : uLocation,
+				education : uEducation,
+				gender : uGender,
+				pred1 : uPred1,
+				pred2 : uPred2,
+				pred3 : uPred3,
+				pred4 : uPred4
+			};
+
+			console.log(userInfo);
+			
+			$.post("https://inner-eye.herokuapp.com/store", JSON.stringify(userInfo), function(response){
+				console.log(response);
+			});
+
+		}
+	</script>
+
+
+</body>
+</html>
