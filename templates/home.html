@@ -2,7 +2,7 @@
 <html>
 <head>
 	<title>InnerEye Prediction</title>
-	<link rel="stylesheet" href="index_master.css"/>
+	<link rel="stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/home_master.css') }}"/>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>
 	<style>
 		* {
@@ -13,7 +13,7 @@
 <body>
 	<div class="jumbotron main-body" id="div2">
 			<h1 class="display-4" style="font-weight:bold">InnerEye Predictions</h1>
-			<p class="lead">Check the origanility of any picture!</p>
+			<p class="lead">InnerEye is an online tool designed to detect whether there has been any kind of filter applied to an image. Please help us improve our tool by filling out the survey form. Please use an JPEG image format, as our tool currently supports JPEG images only.</p>
 			<hr class="my-4">
 			<div class="row">
 			  <div class="column">
@@ -138,13 +138,13 @@
 
 							<div class="form-check">
 								
-									<input type="radio" class="form-check-input" name="pred3" id="q1pred3" value="option31" checked>
+									<input type="radio" class="form-check-input" name="pred3" id="q1pred3" value="option32" checked>
 									Prediction result
 								
 							</div>
 							<div class="form-check">
 								
-									<input type="radio" class="form-check-input" name="pred3" id="q1pred3" value="option31" checked>
+									<input type="radio" class="form-check-input" name="pred3" id="q1pred3" value="option33" checked>
 									Both
 								
 							</div>
@@ -272,6 +272,7 @@
 			
 			$.post("https://inner-eye.herokuapp.com/store", JSON.stringify(userInfo), function(response){
 				console.log(response);
+				location.reload(true);
 			});
 
 		}

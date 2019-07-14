@@ -1,5 +1,5 @@
 body{
-  background-color: #2A9D8F !important;
+  background-color: #2A9D75 !important;
 }
 .my-4{
   background-color: #FF9F1C !important;
@@ -11,7 +11,7 @@ body{
 .main-body{
   background-color: #264653 !important;
   color: #FDFFFC;
-  border-top: 40px solid #2A9D8F;
+  border-top: 40px solid #2A9D75;
   /*border-bottom: 40px solid #2A9D8F;*/
   padding: 5% !important;
   height: 850px;
@@ -22,7 +22,8 @@ body{
   float: left;
   width: 50%;
   padding: 15px;
-  height: 300px; /* Should be removed. Only for demonstration */
+  height: 560px; /* Should be removed. Only for demonstration */
+
 }
 
 /* Clear floats after the columns */
@@ -32,6 +33,12 @@ body{
   clear: both;
 }
 
+#left{
+  background-color: #2B8A64 !important;
+}
+#right{
+  background-color: #2A9D75 !important;
+}
 .info1 {
   float: left;
   width: 50%;
@@ -84,7 +91,7 @@ body{
   float: left;
   width: 50%;
   padding: 10px;
-  height: 100px; /* Should be removed. Only for demonstration */
+  height: 80px; /* Should be removed. Only for demonstration */
 }
 
 /* Clear floats after the columns */

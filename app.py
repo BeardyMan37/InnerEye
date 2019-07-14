@@ -12,11 +12,42 @@ from keras.preprocessing.image import ImageDataGenerator
 from keras.preprocessing.image import img_to_array
 from flask import request
 from flask import jsonify
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect, url_for, request
 from flask_cors import CORS, cross_origin
+from flask_sqlalchemy import SQLAlchemy
+from flask_heroku import Heroku
 
 app = Flask(__name__)
 # cors = CORS(app, resources={r"/foo": {"origins": "http://localhost:port"}})
+heroku = Heroku(app)
+db = SQLAlchemy(app)
+
+
+class Survey(db.Model):
+    __tablename__ = "surveys"
+    id = db.Column(db.Integer, primary_key = True)
+    age = db.Column(db.Integer)
+    location = db.Column(db.String(120))
+    education = db.Column(db.String(25))
+    gender = db.Column(db.String(10))
+    pred1 = db.Column(db.String(10))
+    pred2 = db.Column(db.String(10))
+    pred3 = db.Column(db.String(10))
+    pred4 = db.Column(db.Integer)
+
+    def __init__(self, age, location, education, gender, pred1, pred2, pred3, pred4):
+        self.age = age
+        self.location = location
+        self.education = education
+        self.gender = gender
+        self.pred1 = pred1
+        self.pred2 = pred2
+        self.pred3 = pred3
+        self.pred4 = pred4
+
+    def __repr__(self):
+        return '<Age %r>' % self.age
+
 
 def get_model():
 	global model
@@ -29,7 +60,7 @@ def preprocess_image(image, target_size):
 		image = image.convert("RGB")
 	image = image.resize(target_size, Image.ANTIALIAS)
 	image = img_to_array(image)
-	image = np.expand_dims(image, axis=0)
+	image = np.expand_dims(image, axis = 0)
 	image = image.astype('float32') / 255
 	
 	return image
@@ -37,18 +68,24 @@ def preprocess_image(image, target_size):
 print(" * Loading Model...")
 get_model()
 
+@app.route('/')
+@app.route('/home')
+def home_function():
+	print("In home function")
+	return render_template('home.html')
 
-@app.route("/predict", methods=["POST"])
+
+@app.route('/predict', methods = ['GET', 'POST'])
 # @cross_origin(origin='localhost',headers=['Content- Type','Authorization'])
 
-def predict():
-	print("In index function")
-	message = request.get_json(force=True)
+def predict_function():
+	print("In predict function")
+	message = request.get_json(force = True)
 	encoded = message['image']
 	
 	decoded = base64.b64decode(encoded)
 	image = Image.open(io.BytesIO(decoded))
-	processed_image = preprocess_image(image, target_size=(64, 64))
+	processed_image = preprocess_image(image, target_size = (64, 64))
 	
 	prediction = model.predict(processed_image).tolist()
 	
@@ -64,16 +101,16 @@ def predict():
 	
 	return jsonify(response)
 
-@app.route("/store",methods=["POST"])
+@app.route('/store', methods = ['GET', 'POST'])
 # @cross_origin(origin='localhost',headers=['Content- Type','Authorization'])
 
-def store():
+def store_function():
 	print("In store function")
-	userInfo = request.get_json(force=True)
+	userInfo = request.get_json(force = True)
 	age = userInfo['age']
 	location = userInfo['location']
 	education = userInfo['education']
-	gender=userInfo['gender']
+	gender = userInfo['gender']
 	pred1 = userInfo['pred1']
 	pred2 = userInfo['pred2']
 	pred3 = userInfo['pred3']
@@ -88,9 +125,12 @@ def store():
 	print(pred3)
 	print(pred4)
 
-	return render_template('thankyou.html')
-	# response = "thank you"
-	# return jsonify(response)
+	survey = Survey(age, location, education, gender, pred1, pred2, pred3, pred4)
+	db.session.add(survey)
+	db.session.commit()
+
+	return jsonify(userInfo)
+
 
 if __name__ == "__main__":
-	app.run()
+	app.run(debug = True)
