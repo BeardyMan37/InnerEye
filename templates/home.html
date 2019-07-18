@@ -11,158 +11,172 @@
 	</style>
 </head>
 <body>
-	<div class="jumbotron main-body" id="div2">
-			<h1 class="display-4" style="font-weight:bold">InnerEye Predictions</h1>
-			<p class="lead">InnerEye is an online tool designed to detect whether there has been any kind of filter applied to an image. Please help us improve our tool by filling out the survey form. Please use an JPEG image format, as our tool currently supports JPEG images only.</p>
-			<hr class="my-4">
-			<div class="row">
-			  <div class="column">
-				<!-- <h2>Column 1</h2> -->
-				<div class="form-group">
-						<img id="selected-image" style="width:300px;height:200px;border:0px; " src="" />
+	<div class="main-body" id="div2">
+		<center>
+			<table style="width:100%">
+			  	<tr>
+				    <td style="text-align:center;"><h1 id="title" style="font-weight:bold"><img id="logo" src="{{ url_for('static',filename='images/logo.png') }}" style="height:40px;border:0px;padding-right:5px; " alt="Original">InnerEye Predictions</h1></td> 
+			  	</tr>
+			  	<tr>
+				  	<td height="1">
+				  		<p><center>This site can predict originality of a high-resolution image(JPEG).</center></p>
+				  		<p><center>To perform the prediction, choose the image file and click 'Predict'.</center></p>
+				  	</td>
+			  	</tr>
+			</table>
+		</center>
+
+			
+		<div class="row">
+		  	<div class="column" id="left">
+				<div class="imagerow">
+					<div class="imagecolumn">
+						<div class="form-group">
+								<img id="selected-image" style="width:240px;height:135px;border:0px; " src="" />
+						</div>
+						<div class="form-group">
+							<input onchange="inputImage()" id="image-selector" type="file"/>
+						</div>
+						<div class="form-group" id="div4">
+							<button id="predict-button" class="btn btn-warning" onclick="predictButton()">Predict</button>
+						</div>
+					</div>
+					<div class="imagecolumn">
+						<div class="form-group result">
+							<!-- <p>Confidence of being original image: <span id="original-confidence"></span></p> -->
+							<p id="chance"><font color="7A0000"><b>Chances of being edited:</b></font> <span id="filtered-confidence" ></span></p>
+							<p id="summary"><font color="241956"><b>Summary:</b> </font><span id="prediction" ></span>
+							</p>
+						</div>
+					</div>
 				</div>
-				<div class="form-group">
-					<input onchange="inputImage()" id="image-selector" type="file"/>
-				</div>
-				<div class="form-group" id="div4">
-					<button id="predict-button" class="btn btn-warning" onclick="predictButton()">Predict</button>
-				</div>
-				 <div class="form-group result">
-					<p>Confidence of being original image: <span id="original-confidence"></span></p>
-					<p>Confidence of being filtered image: <span id="filtered-confidence"></span></p>
-					<p>Predictions: <span id="prediction" ></span></p>
-				</div>
-			  </div>
-			  <div class="column">
-				<h2>Originality Prediction Survey:</h2>
 				
+				 
+				<div class="headText">
+					<h6><b>Some example images our system can detect:</b></h6>
+				</div>
+				<div class="rowHead">
+					<div class="columnHead" id="img1">
+						<img src="{{ url_for('static',filename='images/img1.jpg') }}" style="height:80px;border:0px; " alt="Original">
+						<figcaption>Original</figcaption>
+					</div>
+					<div class="columnHead" id="img2">
+						<img src="{{ url_for('static',filename='images/img2.jpg') }}" style="height:80px;border:0px; " alt="Gotham Filter">
+						<figcaption>Edited</figcaption>
+					</div>
+				
+					<div class="columnHead" id="img3">
+						<img src="{{ url_for('static',filename='images/img3.jpg') }}" style="height:80px;border:0px; "alt="Nashville Filter">
+						<figcaption>Edited</figcaption>
+					</div>
+					<div class="columnHead" id="img4">
+						<img src="{{ url_for('static',filename='images/img4.jpg') }}" style="height:80px;border:0px; " alt="Sepia Filter">
+						<figcaption>Edited</figcaption>
+					</div>
+				</div>
+		  	</div>
+		  	<div class="column" id="right">
+				<h2>Survey: <font size=15%>(Participate here to help us in improving your experience.)</font></h2><h6><font color = "B71C1C">*</font> Indicates required fields.</h6>
+				<!-- <hr class="my-4"> -->
 				<h5><b>User Information</b></h5>
 				
 				<div class="userInfo1">
-					<div class="info1">
-						<h6><b>Gender:</b></h6>
-						<div class="form-check">
-							<label class="form-check-label">
-								<input type="radio" class="form-check-input" name="gen" id="gen1" value="Male">
-								Male
-							</label>
-
-							<label class="form-check-label">
-								<input type="radio" class="form-check-input" name="gen" id="gen2" value="Female">
-								Female
-							</label>
-
-							<label class="form-check-label">
-								<input type="radio" class="form-check-input" name="gen" id="gen3" value="Others">
-								Others
-							</label>
-							
-						</div>
+					<div class="info1" style="padding-top:4px; ">
+						<!-- <form> -->
+							<font color = "B71C1C">*</font> <b>Gender:</b>
+							  <input type="radio" name="gen" id="gen1" value="Male"> Male
+							  <input type="radio" name="gen" id="gen2" value="Female"> Female
+							  <input type="radio" name="gen" id="gen3" value="Other"> Other
+						<!-- </form> -->
 					</div>
 					<div class="info1">
-						<h6><b>Age:</b></h6>
-						<label class="form-check-label">
-							<input type="text" name="age" id="age" placeholder="18" value="">
-						</label>
+						<!-- <form> -->
+							<font color = "B71C1C">*</font><b> Age: </b><input type="text" name="age" id="age" placeholder="Enter your age in years" value="" required>
+						<!-- </form> -->
 						
 					</div>
 				</div>
 				<div class="userInfo2">
 					<div class="info2">
-						<h6><b>Education:</b></h6>
-						<label class="form-check-label">
-						<select id="education" name="education" value="Secondary School">
-							<option value="secondary">Secondary School</option>
-							<option value="HSecondary">Higher Secondary School</option>
-							<option value="undergraduate">Undergraduate</option>
-							<option value="graduate">Graduate</option>
-							<option value="postgraduate">Postgraduate</option>
+						
+						<form>
+						<font color = "B71C1C">*</font><b> Education: </b><select id="education" name="education" value="Postgraduate" required>
+							<option value="Postgraduate">Postgraduate</option>
+							<option value="Graduate">Graduate</option>
+							<option value="Undergraduate">Undergraduate</option>
+							<option value="Higher Secondary School">Higher Secondary School</option>
+							<option value="Secondary School">Secondary School</option>
 						</select>
-						</label>
+						</form>
 						
 					</div>
 					<div class="info2">
-						<h6><b>Location:</b></h6>
-						<label class="form-check-label">
-							<input type="text" name="location" id="location" placeholder="Palashi, Dhaka, Bangladesh" value="">
-						</label>
+						<form>
+							<font color = "B71C1C">*</font><b> Location: </b><input type="text" name="location" id="location" placeholder="Enter your location" value="" required>
+						</form>
 					</div>
 				</div>
 			   
-				<h5>Survey Questions:</h5>
-				<div class="survey">
-					<div class="form-check-survey">
-						<h6>Is the originality percentage satisfactory?</h6>
-							<div class="form-check">
-								
-									<input type="radio" class="form-check-input" name="pred1" id="q1pred1" value="option11" checked>
-									Yes
-							</div>
+				<h5><b>Survey Questions:</b></h5>
+				<div class="form-group-survey">
+					<font color = "B71C1C">*</font> 1. Is the <font color = "7A0000"><b> "Chances of being edited"</b></font> satisfactory? 
+					<input type="radio" name="pred1" id="q1pred1" value="option11" required> Yes
+					<input type="radio" name="pred1" id="q2pred1" value="option12" required> No
 
+				</div>
+				<div class="form-group-survey">
+					<font color = "B71C1C">*</font> 2. Is the <font color = "241956"><b> "Summary"</b></font> satisfactory?
+					<input type="radio" name="pred2" id="q1pred2" value="option21" required> Yes
+					<input type="radio" name="pred2" id="q2pred2" value="option22" required> No
+				</div>
 
-							<div class="form-check">
+				<div class="form-group-survey">
+					<font color = "B71C1C">*</font> 3. Which of the two methods of feedback is more preferable?
+				</div>
 
-									<input type="radio" class="form-check-input" name="pred1" id="q2pred1" value="option12">
-									No
-							</div>
-					</div>
-					<div class="form-check-survey">
-						<h6>Is the qualitative prediction satisfactory?</h6>
-							<div class="form-check">
-								
-									<input type="radio" class="form-check-input" name="pred2" id="q1pred2" value="option21" checked>
-									Yes
-									
-							</div>
+				<div class="form-group-survey-q3">
+					<input type="radio" name="pred3" id="q1pred3" value="option31" required> <font color = "7A0000"><b> "Chances of being edited"</b></font>
+					<input type="radio" name="pred3" id="q2pred3" value="option32" required> <font color = "241956"><b> "Summary"</b></font>
+					<input type="radio" name="pred3" id="q3pred3" value="option33" required>Both
+				</div>
 
+				<div class="form-group-survey-u">
+					4. What do you think the <font color = "241956"><b>"Summary"</b></font> should be?
+				</div>
 
-							<div class="form-check">
-								
-									<input type="radio" class="form-check-input" name="pred2" id="q2pred2" value="option22">
-									No
-							</div>
-					</div>
+				<div class="form-group-survey-q3">
+					<input type="radio" name="userPrediction" id="userPrediction" value="option41"> None
+				    <input type="radio" name="userPrediction" id="userPrediction" value="option42"> Low
+				    <input type="radio" name="userPrediction" id="userPrediction" value="option43"> Moderate
+				    <input type="radio" name="userPrediction" id="userPrediction" value="option44"> High
+				    <input type="radio" name="userPrediction" id="userPrediction" value="option45"> Sure
 
 				</div>
 
-				<div class="survey2">
-					<div class="form-check-survey2">
-						<h6>Which method of prediction is more preferable?</h6>
-							<div class="form-check">
-								
-									<input type="radio" class="form-check-input" name="pred3" id="q1pred3" value="option31" checked>
-									Originality percentage
-								
-							</div>
+				<div class="form-group-survey-u">
+					5. What do you think the <font color = "7A0000"><b>"Chances of being edited"</b></font> should be? (Example: 78) 
+					
 
+				</div>
 
-							<div class="form-check">
-								
-									<input type="radio" class="form-check-input" name="pred3" id="q1pred3" value="option32" checked>
-									Prediction result
-								
-							</div>
-							<div class="form-check">
-								
-									<input type="radio" class="form-check-input" name="pred3" id="q1pred3" value="option33" checked>
-									Both
-								
-							</div>
-					</div>
-					<div class="form-check-survey2">
-						<h6>User's originality prediction in percentage:</h6>
-						<div class="form-group">
-							<input type="text" name="userPrediction" id="userPrediction" placeholder=" Example: 78" value="">
+				<div class="endingRow">
+					<div class="endingColumn">
+						<div class="form-group-survey-q3" style="padding-top: 2%; ">
+							<input type="text" name="userSummary" id="userSummary" placeholder="Enter a percentage" value="" required>
 
 						</div>
 					</div>
 
-				</div>
-				<div class="form-group">
-						<button id="submit" onclick="getAndSend()" class="btn btn-primary" type="button" name="button">Submit</button>
+					<div class="endingColumn">
+						<div class="form-group-survey" style="padding-left: 15%; ">
+							<button id="submit" onclick="getAndSend()" class="btn btn-primary" type="button" name="button">Submit</button>
+						</div>	
 					</div>
-			  </div>
-			</div>
+
+
+				</div>
+		  	</div>
+		</div>
 	</div>
 
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -177,29 +191,14 @@
 			  if (isNaN(value) || !(typeof exp === 'number' && exp % 1 === 0))
 					return NaN;
 
-			  // Shift
 			  value = value.toString().split('e');
 			  value = Math.round(+(value[0] + 'e' + (value[1] ? (+value[1] + exp) : exp)));
 
-			  // Shift back
 			  value = value.toString().split('e');
 			  return +(value[0] + 'e' + (value[1] ? (+value[1] - exp) : -exp));
 		}
 
 		let base64Image;
-		
-		// $("#image-selector").change(function(){
-		//  let reader = new FileReader();
-		//  reader.onload = function(e){
-		//      let dataURL = reader.result;
-		//      $('#selected-image').attr("src", dataURL);
-		//      base64Image = dataURL.replace("data:image/jpeg;base64,", "");
-		//      console.log(base64Image);
-		//  };
-		//  reader.readAsDataURL($("#image-selector")[0].files[0]);
-		//  $("#original-prediction").text("");
-		//  $("#filtered-prediction").text("");
-		// });
 		$
 		function inputImage(){
 			let reader = new FileReader();
@@ -223,16 +222,16 @@
 			};
 			console.log(message);
 			$.post("https://inner-eye.herokuapp.com/predict", JSON.stringify(message), function(response){
-				$("#original-confidence").text((round(response.prediction.original * 100, 0).toFixed(0)) + "%");
+				// $("#original-confidence").text((round(response.prediction.original * 100, 0).toFixed(0)) + "%");
 				$("#filtered-confidence").text((round(response.prediction.filtered * 100, 0).toFixed(0)) + "%");
 				
-				let filteredConfidence=response.prediction.filtered.toFixed(6);
-				let prediction="";
-				if(filteredConfidence>=0 && filteredConfidence <=0.20) prediction="InnerEye is strictly confident that there were no filter applied on this image.";
-				else if(filteredConfidence>0.20 && filteredConfidence <=0.40) prediction="InnerEye is fairly confident that there were no filter applied on this image, although the color distribution may be similar to some filters.";
-				else if(filteredConfidence>0.40 && filteredConfidence <=0.60) prediction="InnerEye is unable to make a prediction about this image due to uncertainity.";
-				else if(filteredConfidence>0.60 && filteredConfidence <=0.80) prediction="InnerEye is fairly confident that some kind of filter were applied on this image, although it might be possible that the color distribution threw it off track.";
-				else if(filteredConfidence>0.80 && filteredConfidence <=1.00) prediction="InnerEye is strictly confident that some kind of filter were applied on this image.";
+				let filteredConfidence = response.prediction.filtered.toFixed(6);
+				let prediction = "";
+				if(filteredConfidence >= 0 && filteredConfidence <= 0.20) prediction = "InnerEye thinks there is no chance of the image being edited.";
+				else if(filteredConfidence > 0.20 && filteredConfidence <= 0.40) prediction = "InnerEye thinks there is low chance of the image being edited.";
+				else if(filteredConfidence > 0.40 && filteredConfidence <= 0.60) prediction = "InnerEye thinks there is moderate chance of the image being edited.";
+				else if(filteredConfidence > 0.60 && filteredConfidence <= 0.80) prediction = "InnerEye thinks there is high chance of the image being edited.";
+				else if(filteredConfidence > 0.80 && filteredConfidence <= 1.00) prediction = "InnerEye is sure that the image is edited.";
 				
 				// $("#prediction").text(prediction);
 				document.getElementById("prediction").innerHTML =prediction;
@@ -250,12 +249,8 @@
 			let uPred1=$("input[name='pred1']:checked").val();
 			let uPred2=$("input[name='pred2']:checked").val();
 			let uPred3=$("input[name='pred3']:checked").val();
-			let uPred4 = document.getElementById("userPrediction").value;
-
-			
-
-
-			
+			let uPred4=$("input[name='userPrediction']:checked").val();
+			let uPred5= document.getElementById("userSummary").value;
 
 			let userInfo = {
 				age : uAge,
@@ -265,7 +260,8 @@
 				pred1 : uPred1,
 				pred2 : uPred2,
 				pred3 : uPred3,
-				pred4 : uPred4
+				pred4 : uPred4,
+				pred5 : uPred5
 			};
 
 			console.log(userInfo);

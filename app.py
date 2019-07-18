@@ -33,9 +33,10 @@ class Survey(db.Model):
     pred1 = db.Column(db.String(10))
     pred2 = db.Column(db.String(10))
     pred3 = db.Column(db.String(10))
-    pred4 = db.Column(db.Integer)
+    pred4 = db.Column(db.String(10))
+    pred5 = db.Column(db.Integer)
 
-    def __init__(self, age, location, education, gender, pred1, pred2, pred3, pred4):
+    def __init__(self, age, location, education, gender, pred1, pred2, pred3, pred4, pred5):
         self.age = age
         self.location = location
         self.education = education
@@ -44,9 +45,7 @@ class Survey(db.Model):
         self.pred2 = pred2
         self.pred3 = pred3
         self.pred4 = pred4
-
-    def __repr__(self):
-        return '<Age %r>' % self.age
+        self.pred5 = pred5
 
 
 def get_model():
@@ -115,6 +114,7 @@ def store_function():
 	pred2 = userInfo['pred2']
 	pred3 = userInfo['pred3']
 	pred4 = userInfo['pred4']
+	pred5 = userInfo['pred5']
     
 	print(age)
 	print(location)
@@ -124,8 +124,10 @@ def store_function():
 	print(pred2)
 	print(pred3)
 	print(pred4)
+	print(pred5)
 
-	survey = Survey(age, location, education, gender, pred1, pred2, pred3, pred4)
+
+	survey = Survey(age, location, education, gender, pred1, pred2, pred3, pred4, pred5)
 	db.session.add(survey)
 	db.session.commit()
 
