@@ -6,7 +6,7 @@
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>
 	<style>
 		* {
-			font-size:15px;
+			font-size:13px;
 		}
 	</style>
 </head>
@@ -15,12 +15,12 @@
 		<center>
 			<table style="width:100%">
 			  	<tr>
-				    <td style="text-align:center;"><h1 id="title" style="font-weight:bold"><img id="logo" src="{{ url_for('static',filename='images/logo.png') }}" style="height:40px;border:0px;padding-right:5px; " alt="Original">InnerEye Predictions</h1></td> 
+				    <td style="text-align:center;"><h2 id="title" style="font-weight:bold"><img id="logo" src="{{ url_for('static',filename='images/logo.png') }}" style="height:25px;border:0px;padding-right:5px; " alt="Original">InnerEye Predictions</h2></td> 
 			  	</tr>
 			  	<tr>
 				  	<td height="1">
-				  		<p><center>This site can predict originality of a high-resolution image(JPEG).</center></p>
-				  		<p><center>To perform the prediction, choose the image file and click 'Predict'.</center></p>
+				  		<p style="line-height: 0.8;"><center>This site can predict originality of an image (JPEG).</center></p>
+				  		<p style="line-height: 0.8;"><center>To perform the prediction, choose the image file and click 'Predict'.</center></p>
 				  	</td>
 			  	</tr>
 			</table>
@@ -44,7 +44,7 @@
 					<div class="imagecolumn">
 						<div class="form-group result">
 							<!-- <p>Confidence of being original image: <span id="original-confidence"></span></p> -->
-							<p id="chance"><font color="7A0000"><b>Chances of being edited:</b></font> <span id="filtered-confidence" ></span></p>
+							<p id="chance"><font color="7A0000"><b>Chance of being edited:</b></font> <span id="filtered-confidence" ></span></p>
 							<p id="summary"><font color="241956"><b>Summary:</b> </font><span id="prediction" ></span>
 							</p>
 						</div>
@@ -76,7 +76,7 @@
 				</div>
 		  	</div>
 		  	<div class="column" id="right">
-				<h2>Survey: <font size=15%>(Participate here to help us in improving your experience.)</font></h2><h6><font color = "B71C1C">*</font> Indicates required fields.</h6>
+				<h3>Survey: <font size=15%>(Participate here to help us in improving your experience. <font color = "B71C1C">*</font> Indicates required fields.)</font></h3>
 				<!-- <hr class="my-4"> -->
 				<h5><b>User Information</b></h5>
 				
@@ -119,15 +119,27 @@
 			   
 				<h5><b>Survey Questions:</b></h5>
 				<div class="form-group-survey">
-					<font color = "B71C1C">*</font> 1. Is the <font color = "7A0000"><b> "Chances of being edited"</b></font> satisfactory? 
-					<input type="radio" name="pred1" id="q1pred1" value="option11" required> Yes
-					<input type="radio" name="pred1" id="q2pred1" value="option12" required> No
+					<font color = "B71C1C">*</font> 1. Is the <font color = "7A0000"><b> "Chance of being edited"</b></font> satisfactory? 
+					
+				</div>
 
+				<div class="form-group-survey-q3">
+					<input type="radio" name="pred1" id="q1pred1" value="option11" required> 5 (Strongly agree)
+					<input type="radio" name="pred1" id="q2pred1" value="option12" required> 4 (Agree)
+					<input type="radio" name="pred1" id="q3pred1" value="option13" required> 3 (Neutral)
+					<input type="radio" name="pred1" id="q4pred1" value="option14" required> 2 (Disagree)
+					<input type="radio" name="pred1" id="q5pred1" value="option15" required> 1 (Strongly disagree)
 				</div>
 				<div class="form-group-survey">
 					<font color = "B71C1C">*</font> 2. Is the <font color = "241956"><b> "Summary"</b></font> satisfactory?
-					<input type="radio" name="pred2" id="q1pred2" value="option21" required> Yes
-					<input type="radio" name="pred2" id="q2pred2" value="option22" required> No
+					
+				</div>
+				<div class="form-group-survey-q3">
+					<input type="radio" name="pred2" id="q1pred2" value="option21" required> 5 (Strongly agree)
+					<input type="radio" name="pred2" id="q3pred2" value="option22" required> 4 (Agree)
+					<input type="radio" name="pred2" id="q3pred2" value="option23" required> 3 (Neutral)
+					<input type="radio" name="pred2" id="q4pred2" value="option24" required> 2 (Disagree)
+					<input type="radio" name="pred2" id="q5pred2" value="option25" required> 1 (Strongly disagree)
 				</div>
 
 				<div class="form-group-survey">
@@ -135,13 +147,14 @@
 				</div>
 
 				<div class="form-group-survey-q3">
-					<input type="radio" name="pred3" id="q1pred3" value="option31" required> <font color = "7A0000"><b> "Chances of being edited"</b></font>
+					<input type="radio" name="pred3" id="q1pred3" value="option31" required> <font color = "7A0000"><b> "Chance of being edited"</b></font>
 					<input type="radio" name="pred3" id="q2pred3" value="option32" required> <font color = "241956"><b> "Summary"</b></font>
 					<input type="radio" name="pred3" id="q3pred3" value="option33" required>Both
+					<input type="radio" name="pred3" id="q4pred3" value="option34" required>None
 				</div>
 
 				<div class="form-group-survey-u">
-					4. What do you think the <font color = "241956"><b>"Summary"</b></font> should be?
+					4. What do you think the <font color = "241956"><b>"Summary"</b></font> should be for your chosen image as per your opinion?
 				</div>
 
 				<div class="form-group-survey-q3">
@@ -154,7 +167,7 @@
 				</div>
 
 				<div class="form-group-survey-u">
-					5. What do you think the <font color = "7A0000"><b>"Chances of being edited"</b></font> should be? (Example: 78) 
+					5. What do you think the <font color = "7A0000"><b>"Chance of being edited"</b></font> should be for your chosen image as per your opinion? (Example: 78) 
 					
 
 				</div>
@@ -252,6 +265,10 @@
 			let uPred4=$("input[name='userPrediction']:checked").val();
 			let uPred5= document.getElementById("userSummary").value;
 
+			var userImg = document.querySelector("#selected-image");
+	        var uRealWidth = userImg.naturalWidth;
+	        var uRealHeight = userImg.naturalHeight;
+
 			let userInfo = {
 				age : uAge,
 				location : uLocation,
@@ -261,7 +278,9 @@
 				pred2 : uPred2,
 				pred3 : uPred3,
 				pred4 : uPred4,
-				pred5 : uPred5
+				pred5 : uPred5,
+				realWidth : uRealWidth,
+				realHeight : uRealHeight
 			};
 
 			console.log(userInfo);

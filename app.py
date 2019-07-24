@@ -30,17 +30,21 @@ class Survey(db.Model):
     location = db.Column(db.String(120))
     education = db.Column(db.String(25))
     gender = db.Column(db.String(10))
+    realWidth = db.Column(db.Integer)
+    realHeight = db.Column(db.Integer)
     pred1 = db.Column(db.String(10))
     pred2 = db.Column(db.String(10))
     pred3 = db.Column(db.String(10))
     pred4 = db.Column(db.String(10))
     pred5 = db.Column(db.Integer)
 
-    def __init__(self, age, location, education, gender, pred1, pred2, pred3, pred4, pred5):
+    def __init__(self, age, location, education, gender, pred1, pred2, pred3, pred4, pred5, realWidth, realHeight):
         self.age = age
         self.location = location
         self.education = education
         self.gender = gender
+        self.realWidth = realWidth
+        self.realHeight = realHeight
         self.pred1 = pred1
         self.pred2 = pred2
         self.pred3 = pred3
@@ -50,14 +54,14 @@ class Survey(db.Model):
 
 def get_model():
 	global model
-	model = load_model('Model_original_vs_filtered_zero_shot_nashville_toaster_End_to_end-5_with_sepia-10-0.8510.h5')
+	model = load_model('Model_Filter_classifier-8_ResNet_Original_vs_Filtered_32x32-20-0.8903.h5')
 	print(" * Model Loaded!")
 	model._make_predict_function()
 
 def preprocess_image(image, target_size):
 	if image.mode != "RGB":
 		image = image.convert("RGB")
-	image = image.resize(target_size, Image.ANTIALIAS)
+	image = image.resize(target_size, Image.LANCZOS)
 	image = img_to_array(image)
 	image = np.expand_dims(image, axis = 0)
 	image = image.astype('float32') / 255
@@ -84,7 +88,7 @@ def predict_function():
 	
 	decoded = base64.b64decode(encoded)
 	image = Image.open(io.BytesIO(decoded))
-	processed_image = preprocess_image(image, target_size = (64, 64))
+	processed_image = preprocess_image(image, target_size = (32, 32))
 	
 	prediction = model.predict(processed_image).tolist()
 	
@@ -115,6 +119,8 @@ def store_function():
 	pred3 = userInfo['pred3']
 	pred4 = userInfo['pred4']
 	pred5 = userInfo['pred5']
+	realWidth = userInfo['realWidth']
+	realHeight = userInfo['realHeight'] 
     
 	print(age)
 	print(location)
@@ -125,9 +131,11 @@ def store_function():
 	print(pred3)
 	print(pred4)
 	print(pred5)
+	print(realWidth)
+	print(realHeight)
 
 
-	survey = Survey(age, location, education, gender, pred1, pred2, pred3, pred4, pred5)
+	survey = Survey(age, location, education, gender, pred1, pred2, pred3, pred4, pred5, realWidth, realHeight)
 	db.session.add(survey)
 	db.session.commit()
 
