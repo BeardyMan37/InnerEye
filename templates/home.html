@@ -29,7 +29,11 @@
 			
 		<div class="row">
 		  	<div class="column" id="left">
+		  		<div class="headText">
+		  			<h3 id="predHead">Predictor:</h3>
+		  		</div>
 				<div class="imagerow">
+
 					<div class="imagecolumn">
 						<div class="form-group">
 								<img id="selected-image" style="width:240px;height:135px;border:0px; " src="" />
@@ -45,8 +49,8 @@
 						<div class="form-group result">
 							<!-- <p>Confidence of being original image: <span id="original-confidence"></span></p> -->
 							<p id="chance"><font color="7A0000"><b>Chance of being edited:</b></font> <span id="filtered-confidence" ></span></p>
-							<p id="summary"><font color="241956"><b>Summary:</b> </font><span id="prediction" ></span>
-							</p>
+							<p id="summary"><font color="241956"><b>Summary:</b> </font><b><span id="prediction1" ></span></b></p>
+							<p><span id="prediction2" ></span></p>
 						</div>
 					</div>
 				</div>
@@ -91,7 +95,7 @@
 					</div>
 					<div class="info1">
 						<!-- <form> -->
-							<font color = "B71C1C">*</font><b> Age: </b><input type="text" name="age" id="age" placeholder="Enter your age in years" value="" required>
+							<font color = "B71C1C">*</font><b> Age: </b><input style="height: 35px;" type="text" name="age" id="age" placeholder="Enter your age in years" value="" required>
 						<!-- </form> -->
 						
 					</div>
@@ -100,7 +104,7 @@
 					<div class="info2">
 						
 						<form>
-						<font color = "B71C1C">*</font><b> Education: </b><select id="education" name="education" value="Postgraduate" required>
+						<font color = "B71C1C">*</font><b> Education: </b><select style="height: 35px;" id="education" name="education" value="Postgraduate" required>
 							<option value="Postgraduate">Postgraduate</option>
 							<option value="Graduate">Graduate</option>
 							<option value="Undergraduate">Undergraduate</option>
@@ -112,14 +116,14 @@
 					</div>
 					<div class="info2">
 						<form>
-							<font color = "B71C1C">*</font><b> Location: </b><input type="text" name="location" id="location" placeholder="Enter your location" value="" required>
+							<font color = "B71C1C">*</font><b> Location: </b><input style="height: 35px;" type="text" name="location" id="location" placeholder="Enter your location" value="" required>
 						</form>
 					</div>
 				</div>
 			   
 				<h5><b>Survey Questions:</b></h5>
 				<div class="form-group-survey">
-					<font color = "B71C1C">*</font> 1. Is the <font color = "7A0000"><b> "Chance of being edited"</b></font> satisfactory? 
+					<font color = "B71C1C">*</font> 1. The <font color = "7A0000"><b> "Chance of being edited"</b></font> is satisfactory: 
 					
 				</div>
 
@@ -131,7 +135,7 @@
 					<input type="radio" name="pred1" id="q5pred1" value="option15" required> 1 (Strongly disagree)
 				</div>
 				<div class="form-group-survey">
-					<font color = "B71C1C">*</font> 2. Is the <font color = "241956"><b> "Summary"</b></font> satisfactory?
+					<font color = "B71C1C">*</font> 2. The <font color = "241956"><b> "Summary"</b></font> is satisfactory:
 					
 				</div>
 				<div class="form-group-survey-q3">
@@ -174,15 +178,15 @@
 
 				<div class="endingRow">
 					<div class="endingColumn">
-						<div class="form-group-survey-q3" style="padding-top: 2%; ">
-							<input type="text" name="userSummary" id="userSummary" placeholder="Enter a percentage" value="" required>
+						<div class="form-group-survey-q3" style="padding-top: 2%;">
+							<input style="height: 35px;" type="text" name="userSummary" id="userSummary" placeholder="Enter a percentage" value="" required>
 
 						</div>
 					</div>
 
 					<div class="endingColumn">
-						<div class="form-group-survey" style="padding-left: 15%; ">
-							<button id="submit" onclick="getAndSend()" class="btn btn-primary" type="button" name="button">Submit</button>
+						<div class="form-group-survey" style="padding-left: 15%; padding-top: 2%;">
+							<button style="height: 35px;" id="submit" onclick="getAndSend()" class="btn btn-primary" type="button" name="button">Submit</button>
 						</div>	
 					</div>
 
@@ -239,15 +243,36 @@
 				$("#filtered-confidence").text((round(response.prediction.filtered * 100, 0).toFixed(0)) + "%");
 				
 				let filteredConfidence = response.prediction.filtered.toFixed(6);
-				let prediction = "";
-				if(filteredConfidence >= 0 && filteredConfidence <= 0.20) prediction = "InnerEye thinks there is no chance of the image being edited.";
-				else if(filteredConfidence > 0.20 && filteredConfidence <= 0.40) prediction = "InnerEye thinks there is low chance of the image being edited.";
-				else if(filteredConfidence > 0.40 && filteredConfidence <= 0.60) prediction = "InnerEye thinks there is moderate chance of the image being edited.";
-				else if(filteredConfidence > 0.60 && filteredConfidence <= 0.80) prediction = "InnerEye thinks there is high chance of the image being edited.";
-				else if(filteredConfidence > 0.80 && filteredConfidence <= 1.00) prediction = "InnerEye is sure that the image is edited.";
-				
+				let prediction1 = "";
+				let prediction2 = "";
+				if(filteredConfidence >= 0 && filteredConfidence <= 0.20) 
+					{
+						prediction1 = "None"; 
+						prediction2 = "InnerEye thinks there is no chance of the image being edited.";
+					}
+				else if(filteredConfidence > 0.20 && filteredConfidence <= 0.40) 
+					{
+						prediction1 = "Low";
+						prediction2 = "InnerEye thinks there is low chance of the image being edited.";
+					}
+				else if(filteredConfidence > 0.40 && filteredConfidence <= 0.60)
+					{
+						prediction1 = "Moderate";
+						prediction2 = "InnerEye thinks there is moderate chance of the image being edited.";
+					}
+				else if(filteredConfidence > 0.60 && filteredConfidence <= 0.80)
+					{
+						prediction1 = "High";
+						prediction2 = "InnerEye thinks there is high chance of the image being edited.";
+					}
+				else if(filteredConfidence > 0.80 && filteredConfidence <= 1.00)
+					{
+						prediction1 = "Sure";
+						prediction2 = "InnerEye is sure that the image is edited.";
+					}
 				// $("#prediction").text(prediction);
-				document.getElementById("prediction").innerHTML =prediction;
+				document.getElementById("prediction1").innerHTML =prediction1;
+				document.getElementById("prediction2").innerHTML =prediction2;
 				console.log(response);
 			});
 			

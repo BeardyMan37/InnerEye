@@ -37,8 +37,9 @@ class Survey(db.Model):
     pred3 = db.Column(db.String(10))
     pred4 = db.Column(db.String(10))
     pred5 = db.Column(db.Integer)
+    machinePred = db.Column(db.Integer)
 
-    def __init__(self, age, location, education, gender, pred1, pred2, pred3, pred4, pred5, realWidth, realHeight):
+    def __init__(self, age, location, education, gender, pred1, pred2, pred3, pred4, pred5, realWidth, realHeight, machinePred):
         self.age = age
         self.location = location
         self.education = education
@@ -50,11 +51,12 @@ class Survey(db.Model):
         self.pred3 = pred3
         self.pred4 = pred4
         self.pred5 = pred5
+        self.machinePred = machinePred
 
 
 def get_model():
 	global model
-	model = load_model('Model_Filter_classifier-8_ResNet_Original_vs_Filtered_32x32-20-0.8903.h5')
+	model = load_model('Model_InnerEye-classifier-Sequential-v1-078-0.9421.h5')
 	print(" * Model Loaded!")
 	model._make_predict_function()
 
@@ -68,6 +70,7 @@ def preprocess_image(image, target_size):
 	
 	return image
 	
+machinePred = 0
 print(" * Loading Model...")
 get_model()
 
@@ -99,8 +102,10 @@ def predict_function():
 		}
 	}
 	
+	global machinePred
+	machinePred = int(prediction[0][1] * 100)
 	print(response)
-	
+	print(machinePred)
 	
 	return jsonify(response)
 
@@ -133,9 +138,10 @@ def store_function():
 	print(pred5)
 	print(realWidth)
 	print(realHeight)
+	print(machinePred)
 
 
-	survey = Survey(age, location, education, gender, pred1, pred2, pred3, pred4, pred5, realWidth, realHeight)
+	survey = Survey(age, location, education, gender, pred1, pred2, pred3, pred4, pred5, realWidth, realHeight, machinePred)
 	db.session.add(survey)
 	db.session.commit()
 
