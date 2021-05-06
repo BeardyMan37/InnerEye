@@ -6,7 +6,7 @@ chardet==3.0.4
 Click==7.0
 Django==2.2.3
 Flask==1.0.3
-Flask-Cors==3.0.8
+Flask-Cors==3.0.9
 flask-heroku==0.1.9
 Flask-SQLAlchemy==2.4.0
 gast==0.2.2
